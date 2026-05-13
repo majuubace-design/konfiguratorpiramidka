@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Konfigurator Kosmetyczka Piramidka - Kreator Fantazji</title>
+</head>
+<body>
+<!-- Kreator Fantazji - Konfigurator Torba/Kosmetyczka Piramidka: wersja finalna -->
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --panel-2: #f7f9fd;
+    --text: #101828;
+    --muted: #5f6b7a;
+    --accent: #d13d95;
+    --accent-2: #1358c8;
+    --accent-3: #0b2454;
+    --border: #dce3ef;
+    --success: #198754;
+    --danger: #b42318;
+    --soft-pink: #fff1f8;
+    --soft-blue: #eff5ff;
+    --shadow: 0 18px 45px rgba(11,36,84,.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+      radial-gradient(circle at 12% 0%, rgba(209, 61, 149, .10), transparent 29%),
+      radial-gradient(circle at 88% 3%, rgba(19, 88, 200, .12), transparent 32%),
+      #ffffff;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .kf-pyramid-configurator {
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 28px 16px 56px;
+  }
+
+  .kf-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 340px);
+    gap: 28px;
+    align-items: center;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(255,255,255,.96) 0%, rgba(255,241,248,.94) 50%, rgba(239,245,255,.96) 100%);
+    border-radius: 24px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 22px 60px rgba(11,36,84,.10);
+  }
+
+  .kf-eyebrow {
+    color: var(--accent);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .10em;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .kf-hero h1 {
+    margin: 0 0 10px;
+    font-size: clamp(26px, 4vw, 42px);
+    letter-spacing: -0.03em;
+    color: var(--accent-3);
+  }
+
+  .kf-hero p {
+    max-width: 780px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  .kf-hero-logo {
+    width: 100%;
+    max-width: 330px;
+    justify-self: end;
+    filter: drop-shadow(0 14px 24px rgba(11,36,84,.14));
+  }
+
+  .kf-card,
+  .kf-panel,
+  .kf-summary-rows,
+  .kf-gallery-box,
+  .kf-control-panel,
+  .kf-color-strip,
+  .kf-addon,
+  .kf-discounts,
+  .kf-discount-tier {
+    background: rgba(255,255,255,.94);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .kf-card {
+    border-radius: 24px;
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+
+  .kf-card h2 {
+    margin: 0 0 18px;
+    font-size: 22px;
+    color: var(--accent-3);
+  }
+
+  .kf-section-title {
+    margin: 24px 0 12px;
+    color: var(--accent);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 900;
+  }
+
+  .kf-section-title:first-child { margin-top: 0; }
+
+  label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--accent-3) !important;
+    font-weight: 800;
+    font-size: 14px;
+  }
+
+  select,
+  input[type="number"],
+  input[type="text"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="file"],
+  textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--text);
+    font-size: 16px;
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  textarea {
+    min-height: 160px;
+    resize: vertical;
+    font-size: 14px;
+    background: #fbfcff;
+  }
+
+  input[type="file"] { padding: 11px 12px; font-size: 14px; }
+
+  input[type="file"]::file-selector-button {
+    border: 0;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), #b72e82);
+    color: #ffffff;
+    font-weight: 900;
+    padding: 8px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  select:focus,
+  input:focus,
+  textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(209,61,149,.14);
+  }
+
+  .kf-field { margin-bottom: 15px; }
+
+  .kf-material-fixed {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fff, var(--soft-blue));
+    padding: 14px;
+    margin-bottom: 15px;
+  }
+
+  .kf-material-fixed strong {
+    display: block;
+    color: var(--accent-3);
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  .kf-material-fixed span {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .kf-two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .kf-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 370px;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .kf-panel {
+    border-radius: 20px;
+    padding: 18px;
+    background: linear-gradient(135deg, #fff, var(--soft-blue));
+  }
+
+  .kf-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .kf-panel-header strong { color: var(--accent-3); font-size: 17px; }
+  .kf-panel-header span { color: var(--muted); font-size: 13px; text-align: right; }
+
+  .kf-control-panel {
+    border-radius: 20px;
+    padding: 18px;
+    background: linear-gradient(135deg, #fff, var(--soft-pink));
+  }
+
+  .kf-color-strip {
+    border-radius: 18px;
+    padding: 12px;
+    margin-bottom: 14px;
+  }
+
+  .kf-swatches {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .kf-swatch {
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 14px;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--muted);
+    text-align: center;
+    transition: border-color .15s ease, transform .15s ease, background .15s ease, box-shadow .15s ease;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+  }
+
+  .kf-swatch:hover { transform: translateY(-1px); border-color: rgba(209,61,149,.45); }
+  .kf-swatch.active { border-color: var(--accent); background: var(--soft-pink); color: var(--accent-3); box-shadow: 0 0 0 3px rgba(209,61,149,.12); }
+
+  .kf-swatch img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / .78;
+    object-fit: cover;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    background: #f4f7fb;
+  }
+
+  .kf-swatch strong { display: block; font-size: 12px; }
+
+  .kf-stage {
+    width: 100%;
+    border: 1px solid rgba(19,88,200,.18);
+    border-radius: 20px;
+    background: #f8fbff;
+    padding: 12px;
+    box-shadow: 0 20px 45px rgba(11,36,84,.08);
+  }
+
+  .kf-main-image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.18 / 1;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid var(--border);
+  }
+
+  .kf-main-image-wrap > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .kf-print-preview {
+    position: absolute;
+    left: var(--print-preview-x, 55%);
+    top: var(--print-preview-y, 61%);
+    width: var(--print-preview-w, 23%);
+    aspect-ratio: var(--print-preview-aspect, 2.1 / 1);
+    transform: translate(-50%, -50%) rotate(var(--print-preview-angle, -12deg));
+    display: grid;
+    place-items: center;
+    padding: 1.6%;
+    border-radius: 10px;
+    background: transparent;
+    pointer-events: none;
+    filter: drop-shadow(0 8px 12px rgba(11,36,84,.18));
+  }
+
+  .kf-print-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .kf-print-preview.hidden { display: none; }
+
+  .kf-image-label {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    border-radius: 999px;
+    padding: 7px 10px;
+    background: rgba(11,36,84,.86);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .kf-thumbs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .kf-thumb {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    padding: 4px;
+    cursor: pointer;
+    min-height: 76px;
+  }
+
+  .kf-thumb.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(209,61,149,.12); }
+  .kf-thumb img { width: 100%; height: 70px; object-fit: cover; border-radius: 9px; display: block; }
+
+  .kf-support-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .kf-gallery-box {
+    border-radius: 18px;
+    padding: 14px;
+  }
+
+  .kf-gallery-box small {
+    display: block;
+    color: var(--accent);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 8px;
+  }
+
+  .kf-gallery-box p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+
+  .kf-support-main {
+    width: 100%;
+    aspect-ratio: 1.35 / 1;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #fbfcff;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .kf-support-main img { width: 100%; height: 100%; object-fit: contain; object-position: center center; display: block; }
+  .kf-support-main img.kf-common-first {
+    object-fit: contain;
+    object-position: center center;
+    transform: translateY(-16%) scale(0.68);
+    transform-origin: center center;
+  }
+
+  .kf-common-thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-top: 8px;
+  }
+
+  .kf-common-thumbs button {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 3px;
+    cursor: pointer;
+  }
+
+  .kf-common-thumbs button.active { border-color: var(--accent); }
+  .kf-common-thumbs img { width: 100%; height: 54px; object-fit: cover; border-radius: 7px; display: block; }
+
+  .kf-addon {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .kf-addon input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    appearance: none;
+    -webkit-appearance: none;
+    background: #ffffff;
+    border: 2px solid var(--accent);
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    display: inline-grid;
+    place-content: center;
+  }
+
+  .kf-addon input[type="checkbox"]::after {
+    content: "";
+    width: 6px;
+    height: 11px;
+    border-right: 3px solid var(--accent);
+    border-bottom: 3px solid var(--accent);
+    transform: rotate(45deg) scale(0);
+    transform-origin: center;
+    transition: transform .12s ease-in-out;
+    margin-top: -2px;
+  }
+
+  .kf-addon input[type="checkbox"]:checked::after { transform: rotate(45deg) scale(1); }
+  .kf-addon strong { display: block; font-size: 14px; color: var(--accent-3); }
+  .kf-addon span { display: block; color: var(--muted); font-size: 13px; }
+  .kf-addon-price { color: var(--accent); font-weight: 900; white-space: nowrap; font-size: 14px; }
+
+  .kf-price-main,
+  .kf-price-box {
+    background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
+    border: 1px solid rgba(19,88,200,.24);
+    border-radius: 18px;
+    padding: 18px;
+    color: #fff;
+  }
+
+  .kf-price-main { margin-bottom: 16px; }
+  .kf-price-main small,
+  .kf-price-box small { color: rgba(255,255,255,.78); display: block; margin-bottom: 5px; }
+  .kf-price-main strong,
+  .kf-price-box strong { display: block; color: #fff; font-size: clamp(26px, 4vw, 38px); line-height: 1.08; }
+  .kf-price-main p { margin: 8px 0 0; color: rgba(255,255,255,.78); font-size: 13px; }
+
+  .kf-discounts {
+    border-radius: 16px;
+    padding: 12px;
+    margin: -4px 0 18px;
+  }
+
+  .kf-discount-tier {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    border-radius: 12px;
+    padding: 9px 10px;
+    color: var(--muted);
+    font-size: 13px;
+    box-shadow: none;
+    margin-top: 7px;
+  }
+
+  .kf-discount-tier strong { color: var(--accent-3); white-space: nowrap; }
+  .kf-discount-tier.active { border-color: var(--accent); background: var(--soft-pink); color: var(--accent-3); }
+  .kf-discount-tier.active strong { color: var(--accent); }
+
+  .kf-summary-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .72fr) minmax(320px, .28fr);
+    gap: 20px;
+    align-items: start;
+  }
+
+  .kf-summary-rows { border-radius: 18px; overflow: hidden; box-shadow: none; }
+
+  .kf-summary-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .kf-summary-row strong { color: var(--accent-3); text-align: right; }
+  .kf-summary-row:last-child { border-bottom: 0; }
+
+  .kf-price-split { display: grid; gap: 12px; }
+
+  .kf-notice {
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--soft-blue);
+    border: 1px solid rgba(19,88,200,.18);
+    color: var(--accent-3);
+    font-size: 13px;
+  }
+
+  .kf-mini { color: var(--muted); font-size: 13px; margin-top: 8px; }
+
+  .kf-btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+
+  button.kf-primary,
+  button.kf-secondary {
+    border-radius: 12px;
+    padding: 13px 16px;
+    font-weight: 900;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  button.kf-primary { border: 0; background: linear-gradient(135deg, var(--accent), #b72e82); color: #fff; }
+  button.kf-secondary { background: #fff; color: var(--accent-3); border: 1px solid var(--border); }
+
+  .kf-copied { color: var(--success); margin-top: 10px; font-size: 13px; display: none; }
+  .hidden { display: none !important; }
+
+  @media (max-width: 980px) {
+    .kf-layout, .kf-summary-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 840px) {
+    .kf-hero { grid-template-columns: 1fr; }
+    .kf-hero-logo { justify-self: start; max-width: 280px; }
+    .kf-support-row, .kf-two-cols { grid-template-columns: 1fr; }
+    .kf-swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 560px) {
+    .kf-card, .kf-hero { padding: 16px; }
+    .kf-swatches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .kf-thumbs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>
+
+<main class="kf-pyramid-configurator">
+  <section class="kf-hero">
+    <div>
+      <div class="kf-eyebrow">Torba/Kosmetyczka · Piramidka</div>
+      <h1>Skonfiguruj kosmetyczkę Piramidkę</h1>
+      <p>Wybierz kolor, rozmiar, ilość i personalizację. Kosmetyczka ma zewnętrzną warstwę z Kodury oraz podszewkę z Oxfordu. Podgląd zdjęć zmienia się automatycznie po wyborze rozmiaru i koloru, a zdjęcie podszewki jest przypisane do wybranego rozmiaru.</p>
+    </div>
+    <img class="kf-hero-logo" src="https://res.cloudinary.com/dblyczqg2/image/upload/v1778538189/Kreator_Fantazji_fzw6fc.png" alt="Kreator Fantazji" />
+  </section>
+
+  <section class="kf-card">
+    <h2>Podgląd produktu</h2>
+    <div class="kf-layout">
+      <div class="kf-panel">
+        <div class="kf-panel-header">
+          <strong id="mainPanelTitle">Piramidka - Mała</strong>
+          <span id="mainPanelSubtitle">kolor: Chabrowy</span>
+        </div>
+
+        <div class="kf-color-strip">
+          <div class="kf-section-title">Kolor kosmetyczki</div>
+          <div class="kf-swatches" id="colorSwatches"></div>
+          <div class="kf-mini">Wybierz kolor kosmetyczki. Podgląd zdjęć zmieni się automatycznie.</div>
+        </div>
+
+        <div class="kf-stage">
+          <div class="kf-main-image-wrap">
+            <img id="mainImage" src="" alt="Główne zdjęcie kosmetyczki Piramidka" />
+            <div id="printPreview" class="kf-print-preview" aria-hidden="true">
+              <img id="printPreviewLogo" src="https://res.cloudinary.com/dblyczqg2/image/upload/v1778538189/Kreator_Fantazji_fzw6fc.png" alt="Podgląd logo / grafiki" />
+            </div>
+            <div class="kf-image-label" id="imageLabel">Mała · zdjęcie 1</div>
+          </div>
+          <div class="kf-thumbs" id="mainThumbs"></div>
+        </div>
+
+        <div class="kf-support-row">
+          <div class="kf-gallery-box">
+            <small>Wspólne / Back</small>
+            <div class="kf-support-main"><img id="commonImage" src="" alt="Wspólne zdjęcie koloru" /></div>
+            <div class="kf-common-thumbs" id="commonThumbs"></div>
+            <p>Zdjęcia z folderu „Wspólne” są przypięte do aktualnie wybranego koloru i działają jak podgląd tyłu/dodatkowego ujęcia.</p>
+          </div>
+
+          <div class="kf-gallery-box">
+            <small>Podszewka / Środek</small>
+            <div class="kf-support-main"><img id="liningImage" src="" alt="Podszewka w środku kosmetyczki" /></div>
+            <p id="liningText">Podszewka przypisana do rozmiaru.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="kf-control-panel">
+        <div class="kf-price-main">
+          <small>Cena za sztukę orientacyjnie</small>
+          <strong id="unitPriceTop">40 zł</strong>
+          <p>Kosmetyczka: Kodura na zewnątrz, Oxford jako podszewka. Cena zmienia się według rozmiaru, ilości i nadruku.</p>
+        </div>
+
+        <div class="kf-section-title">1. Rozmiar</div>
+        <div class="kf-field">
+          <label for="productSize">Rozmiar kosmetyczki</label>
+          <select id="productSize">
+            <option value="mala" selected>Mała</option>
+            <option value="duza">Duża</option>
+          </select>
+        </div>
+
+        <div class="kf-field">
+          <label for="quantity">Ilość sztuk</label>
+          <input id="quantity" type="number" min="1" step="1" value="1" />
+        </div>
+
+        <div class="kf-discounts">
+          <div class="kf-section-title">Rabaty ilościowe</div>
+          <div id="discountTierList"></div>
+          <div class="kf-mini" id="activeDiscountLabel">Aktywny próg: 1-5 szt.</div>
+        </div>
+
+        <div class="kf-section-title">2. Materiał i wykonanie</div>
+        <div class="kf-material-fixed">
+          <strong>Kodura + Oxford</strong>
+          <span>Zewnętrzna warstwa kosmetyczki jest wykonana z Kodury, a środek/podszewka z Oxfordu. Materiał nie jest wybierany w konfiguratorze.</span>
+        </div>
+
+        <div class="kf-section-title">3. Personalizacja</div>
+        <div class="kf-field">
+          <label for="printOption">Nadruk / logo</label>
+          <select id="printOption">
+            <option value="none" selected>Bez nadruku</option>
+            <option value="oneSide">Logo / grafika z jednej strony +5 zł/szt.</option>
+            <option value="twoSides">Logo / grafika z dwóch stron +8 zł/szt.</option>
+          </select>
+        </div>
+
+        <div class="kf-addon">
+          <input id="logoCorrection" type="checkbox" />
+          <div>
+            <strong>Obróbka grafiki</strong>
+            <span>Usunięcie tła, poprawa jakości, przygotowanie pliku.</span>
+          </div>
+          <div class="kf-addon-price">+20 zł</div>
+        </div>
+
+        <div class="kf-addon">
+          <input id="projectFromScratch" type="checkbox" />
+          <div>
+            <strong>Projekt od zera</strong>
+            <span>Przygotowanie prostego projektu pod nadruk.</span>
+          </div>
+          <div class="kf-addon-price">+50 zł</div>
+        </div>
+
+        <div class="kf-field">
+          <label for="logoFile">Plik z logo / grafiką</label>
+          <input id="logoFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" />
+          <div class="kf-mini">Na tym etapie plik jest zapisywany tylko jako nazwa w podsumowaniu.</div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="kf-card">
+    <h2>Podsumowanie konfiguracji</h2>
+    <div class="kf-summary-grid">
+      <div>
+        <div class="kf-summary-rows">
+          <div class="kf-summary-row"><span>Produkt</span><strong>Torba/Kosmetyczka Piramidka</strong></div>
+          <div class="kf-summary-row"><span>Rozmiar</span><strong id="summarySize">Mała</strong></div>
+          <div class="kf-summary-row"><span>Kolor</span><strong id="summaryColor">Chabrowy</strong></div>
+          <div class="kf-summary-row"><span>Materiał</span><strong id="summaryMaterial">Kodura z zewnątrz / Oxford w środku</strong></div>
+          <div class="kf-summary-row"><span>Ilość</span><strong id="summaryQuantity">1 szt.</strong></div>
+          <div class="kf-summary-row"><span>Nadruk</span><strong id="summaryPrint">Bez nadruku</strong></div>
+          <div class="kf-summary-row"><span>Dodatki jednorazowe</span><strong id="summaryOneTime">0 zł</strong></div>
+          <div class="kf-summary-row"><span>Plik graficzny</span><strong id="summaryFile">Nie dodano</strong></div>
+        </div>
+        <div class="kf-notice">Cena w konfiguratorze jest orientacyjna. Finalną wycenę potwierdzamy po sprawdzeniu pliku graficznego, ilości oraz szczegółów zamówienia.</div>
+      </div>
+      <div class="kf-price-split">
+        <div class="kf-price-box"><small>Cena za sztukę orientacyjnie</small><strong id="unitPriceBottom">40 zł</strong></div>
+        <div class="kf-price-box"><small>Łączna cena zamówienia orientacyjnie</small><strong id="totalOrderPrice">40 zł</strong></div>
+      </div>
+    </div>
+
+    <div class="kf-section-title">Dane klienta</div>
+    <div class="kf-two-cols">
+      <div class="kf-field">
+        <label for="clientName">Imię i nazwisko / nazwa firmy</label>
+        <input id="clientName" type="text" placeholder="np. Jan Kowalski / Nazwa firmy" />
+      </div>
+      <div class="kf-field">
+        <label for="clientPhone">Telefon</label>
+        <input id="clientPhone" type="tel" placeholder="opcjonalnie" />
+      </div>
+    </div>
+    <div class="kf-field">
+      <label for="clientMessage">Wiadomość</label>
+      <textarea id="clientMessage" placeholder="Wpisz uwagi: przeznaczenie, logo, termin, ilość, dodatkowe wymagania."></textarea>
+    </div>
+
+    <div class="kf-section-title">Treść podsumowania</div>
+    <textarea id="summaryText" readonly></textarea>
+    <div class="kf-btn-row">
+      <button class="kf-primary" id="sendBtn" type="button">Przejdź do formularza z podsumowaniem</button>
+      <button class="kf-secondary" id="copyBtn" type="button">Kopiuj podsumowanie</button>
+      <button class="kf-secondary" id="resetBtn" type="button">Wyczyść</button>
+    </div>
+    <div class="kf-copied" id="copied">Podsumowanie skopiowane / przekazane do formularza.</div>
+  </section>
+</main>
+
+<script type="text/javascript">
+(function () {
+  const JOTFORM_URL = 'https://form.jotform.com/261304168963056';
+  const JOTFORM_SUMMARY_FIELD = 'TrescPodsumowania';
+
+  const liningImages = {
+    mala: {
+      label: 'Podszewka - Środek Mała',
+      url: 'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708140/Podszewka-%C5%9Arodek_Ma%C5%82a_fysunj.jpg'
+    },
+    duza: {
+      label: 'Podszewka - Środek Duża',
+      url: 'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708139/Podszewka_%C5%9Arodek_Du%C5%BCa_qyag5a.jpg'
+    }
+  };
+
+  const assets = {
+    chabrowy: {
+      label: 'Chabrowy',
+      folder: 'Chabrowa',
+      small: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708123/Piramidka01_pwqxxl.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708130/Piramidka02_nc48cj.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708126/Piramidka04_tw2mxl.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708128/Piramidka05_lpzcs3.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708127/Piramidka06_m467rd.jpg'
+      ],
+      large: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708124/Piramidka07_mrcxkf.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708124/Piramidka08_p1zq2n.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708122/Piramidka10_kw42h9.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708124/Piramidka11_lwcjyb.jpg'
+      ],
+      common: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708127/Piramidka12_wvlkaj.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708129/Piramidka13_sfh7ug.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708129/Piramidka14_u3yma1.jpg'
+      ]
+    },
+    czarny: {
+      label: 'Czarny',
+      folder: 'Czarny',
+      small: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708131/Piramidka01_eehclo.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708132/Piramidka02_gh6wop.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708135/Piramidka04_nezyqn.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708134/Piramidka05_rsnrt9.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708134/Piramidka06_upclnb.jpg'
+      ],
+      large: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708129/Piramidka07_ppnqq7.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708131/Piramidka08_vvrdwp.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708132/Piramidka10_tyrtm4.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708132/Piramidka11_wok03f.jpg'
+      ],
+      common: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708134/Piramidka12_wmouwx.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708136/Piramidka13_ivwd04.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708135/Piramidka14_jz04il.jpg'
+      ]
+    },
+    czerwony: {
+      label: 'Czerwony',
+      folder: 'Czerwony',
+      small: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708147/Piramidka01_ssnper.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708145/Piramidka02_equwas.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708147/Piramidka04_dex4wg.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708151/Piramidka05_kjkd5o.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708149/Piramidka06_vtnnjg.jpg'
+      ],
+      large: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708143/Piramidka07_wgcjbn.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708142/Piramidka08_xkcv5f.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708142/Piramidka10_sauchc.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708144/Piramidka11_xyt7kj.jpg'
+      ],
+      common: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708150/Piramidka12_islkp6.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708153/Piramidka13_cx5b1x.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708152/Piramidka14_jrdno2.jpg'
+      ]
+    },
+    fuksja: {
+      label: 'Fuksja',
+      folder: 'Fuksja',
+      small: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708158/Piramidka01_sb0p28.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708156/Piramidka02_cetb55.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708139/Piramidka04_f4zytz.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708155/Piramidka05_pdzrcv.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708163/Piramidka06_kbboaq.jpg'
+      ],
+      large: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708156/Piramidka07_t5fw72.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708152/Piramidka08_jyocqn.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708154/Piramidka10_evme6u.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708137/Piramidka11_vffdlv.jpg'
+      ],
+      common: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708137/Piramidka12_hfuiw4.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708159/Piramidka13_ne1eqn.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708160/Piramidka14_iodyit.jpg'
+      ]
+    },
+    turkus: {
+      label: 'Turkus',
+      folder: 'Turkus',
+      small: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708165/Piramidka01_trrq9p.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708163/Piramidka02_y86tff.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708166/Piramidka04_znjabu.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708169/Piramidka05_lhakgg.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708169/Piramidka06_jvnvib.jpg'
+      ],
+      large: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708162/Piramidka07_cfqs2f.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708164/Piramidka08_tenneg.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708166/Piramidka10_hoilzn.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708159/Piramidka11_ofm46h.jpg'
+      ],
+      common: [
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708168/Piramidka12_eppbi8.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708170/Piramidka13_wjizkf.jpg',
+        'https://res.cloudinary.com/dblyczqg2/image/upload/v1778708174/Piramidka14_bvhtvj.jpg'
+      ]
+    }
+  };
+
+  const sizeData = {
+    mala: { label: 'Mała', galleryKey: 'small', basePrice: 40 },
+    duza: { label: 'Duża', galleryKey: 'large', basePrice: 55 }
+  };
+
+  const fixedMaterialLabel = 'Kodura z zewnątrz / Oxford w środku';
+
+  const printOptions = {
+    none: { label: 'Bez nadruku', price: 0 },
+    oneSide: { label: 'Logo / grafika z jednej strony', price: 5 },
+    twoSides: { label: 'Logo / grafika z dwóch stron', price: 8 }
+  };
+
+  const tiers = [
+    { min: 1, max: 5, label: '1-5 szt.', discount: 0 },
+    { min: 6, max: 19, label: '6-19 szt.', discount: 0.05 },
+    { min: 20, max: Infinity, label: '20+ szt.', discount: 0.10 }
+  ];
+
+  const state = {
+    color: 'chabrowy',
+    mainIndex: 0,
+    commonIndex: 0,
+    fileName: '',
+    logoPreviewUrl: 'https://res.cloudinary.com/dblyczqg2/image/upload/v1778538189/Kreator_Fantazji_fzw6fc.png'
+  };
+
+  function $(id) { return document.getElementById(id); }
+
+  const els = {
+    colorSwatches: $('colorSwatches'),
+    productSize: $('productSize'),
+    quantity: $('quantity'),
+    printOption: $('printOption'),
+    logoCorrection: $('logoCorrection'),
+    projectFromScratch: $('projectFromScratch'),
+    logoFile: $('logoFile'),
+    mainImage: $('mainImage'),
+    printPreview: $('printPreview'),
+    printPreviewLogo: $('printPreviewLogo'),
+    imageLabel: $('imageLabel'),
+    mainThumbs: $('mainThumbs'),
+    commonImage: $('commonImage'),
+    commonThumbs: $('commonThumbs'),
+    liningImage: $('liningImage'),
+    liningText: $('liningText'),
+    mainPanelTitle: $('mainPanelTitle'),
+    mainPanelSubtitle: $('mainPanelSubtitle'),
+    unitPriceTop: $('unitPriceTop'),
+    unitPriceBottom: $('unitPriceBottom'),
+    totalOrderPrice: $('totalOrderPrice'),
+    discountTierList: $('discountTierList'),
+    activeDiscountLabel: $('activeDiscountLabel'),
+    clientName: $('clientName'),
+    clientPhone: $('clientPhone'),
+    clientMessage: $('clientMessage'),
+    summaryText: $('summaryText'),
+    copied: $('copied'),
+    sendBtn: $('sendBtn'),
+    copyBtn: $('copyBtn'),
+    resetBtn: $('resetBtn')
+  };
+
+  function money(value) {
+    return Math.round(value).toLocaleString('pl-PL') + ' zł';
+  }
+
+  function getQuantity() {
+    const qty = parseInt(els.quantity.value || '1', 10);
+    return Number.isFinite(qty) && qty > 0 ? qty : 1;
+  }
+
+  function getTier() {
+    const qty = getQuantity();
+    return tiers.find(tier => qty >= tier.min && qty <= tier.max) || tiers[0];
+  }
+
+  function getSize() {
+    return sizeData[els.productSize.value] || sizeData.mala;
+  }
+
+  function getColor() {
+    return assets[state.color] || assets.chabrowy;
+  }
+
+  function getSelectedGallery() {
+    const size = getSize();
+    const color = getColor();
+    return color[size.galleryKey] || [];
+  }
+
+  function getCalculation() {
+    const size = getSize();
+    const quantity = getQuantity();
+    const tier = getTier();
+    const print = printOptions[els.printOption.value] || printOptions.none;
+    const oneTime = (els.logoCorrection.checked ? 20 : 0) + (els.projectFromScratch.checked ? 50 : 0);
+    const discountedBase = size.basePrice * (1 - tier.discount);
+    const unit = discountedBase + print.price;
+    const total = unit * quantity + oneTime;
+
+    return { size, quantity, tier, print, oneTime, unit, total, discountedBase };
+  }
+
+  function renderColorSwatches() {
+    els.colorSwatches.innerHTML = Object.keys(assets).map(key => {
+      const color = assets[key];
+      const preview = color.small[0] || color.large[0] || color.common[0];
+      return [
+        '<button class="kf-swatch ' + (state.color === key ? 'active' : '') + '" type="button" data-color="' + key + '">',
+        '<img src="' + preview + '" alt="' + color.label + '">',
+        '<strong>' + color.label + '</strong>',
+        '</button>'
+      ].join('');
+    }).join('');
+
+    els.colorSwatches.querySelectorAll('.kf-swatch').forEach(button => {
+      button.addEventListener('click', () => {
+        const next = button.getAttribute('data-color');
+        if (assets[next]) {
+          state.color = next;
+          state.mainIndex = 0;
+          state.commonIndex = 0;
+          render();
+        }
+      });
+    });
+  }
+
+  function renderPrintPreview() {
+    if (!els.printPreview || !els.printPreviewLogo) return;
+    const print = printOptions[els.printOption.value] || printOptions.none;
+    const shouldShow = print.price > 0 && state.mainIndex === 0;
+    els.printPreview.classList.toggle('hidden', !shouldShow);
+    els.printPreviewLogo.src = state.logoPreviewUrl || 'https://res.cloudinary.com/dblyczqg2/image/upload/v1778538189/Kreator_Fantazji_fzw6fc.png';
+
+    const sizeKey = els.productSize.value === 'duza' ? 'duza' : 'mala';
+
+    if (sizeKey === 'duza') {
+      // Duża kosmetyczka: finalne ustawienie nadruku.
+      els.printPreview.style.setProperty('--print-preview-x', '66%');
+      els.printPreview.style.setProperty('--print-preview-y', '50%');
+      els.printPreview.style.setProperty('--print-preview-w', '25%');
+      els.printPreview.style.setProperty('--print-preview-aspect', '2.1 / 1');
+      els.printPreview.style.setProperty('--print-preview-angle', '-17deg');
+    } else {
+      // Mała kosmetyczka: finalne ustawienie nadruku.
+      els.printPreview.style.setProperty('--print-preview-x', '62.5%');
+      els.printPreview.style.setProperty('--print-preview-y', '57%');
+      els.printPreview.style.setProperty('--print-preview-w', '24%');
+      els.printPreview.style.setProperty('--print-preview-aspect', '2.1 / 1');
+      els.printPreview.style.setProperty('--print-preview-angle', '-12deg');
+    }
+  }
+
+  function renderMainGallery() {
+    const color = getColor();
+    const size = getSize();
+    const gallery = getSelectedGallery();
+    if (!gallery.length) return;
+
+    if (state.mainIndex >= gallery.length) state.mainIndex = 0;
+    els.mainImage.src = gallery[state.mainIndex];
+    els.mainPanelTitle.textContent = 'Piramidka - ' + size.label;
+    els.mainPanelSubtitle.textContent = 'kolor: ' + color.label;
+    els.imageLabel.textContent = size.label + ' · zdjęcie ' + (state.mainIndex + 1) + ' / ' + gallery.length;
+    renderPrintPreview();
+
+    els.mainThumbs.innerHTML = gallery.map((url, index) => {
+      return '<button class="kf-thumb ' + (index === state.mainIndex ? 'active' : '') + '" type="button" data-index="' + index + '"><img src="' + url + '" alt="' + size.label + ' zdjęcie ' + (index + 1) + '"></button>';
+    }).join('');
+
+    els.mainThumbs.querySelectorAll('.kf-thumb').forEach(button => {
+      button.addEventListener('click', () => {
+        state.mainIndex = parseInt(button.getAttribute('data-index'), 10) || 0;
+        renderMainGallery();
+      });
+    });
+  }
+
+  function renderCommonGallery() {
+    const color = getColor();
+    if (state.commonIndex >= color.common.length) state.commonIndex = 0;
+    els.commonImage.src = color.common[state.commonIndex];
+    els.commonImage.classList.toggle('kf-common-first', state.commonIndex === 0);
+
+    els.commonThumbs.innerHTML = color.common.map((url, index) => {
+      return '<button class="' + (index === state.commonIndex ? 'active' : '') + '" type="button" data-index="' + index + '"><img src="' + url + '" alt="Wspólne zdjęcie ' + (index + 1) + '"></button>';
+    }).join('');
+
+    els.commonThumbs.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', () => {
+        state.commonIndex = parseInt(button.getAttribute('data-index'), 10) || 0;
+        renderCommonGallery();
+      });
+    });
+  }
+
+  function renderLining() {
+    const sizeKey = els.productSize.value === 'duza' ? 'duza' : 'mala';
+    const lining = liningImages[sizeKey];
+    els.liningImage.src = lining.url;
+    els.liningText.textContent = lining.label + ' — przypisana automatycznie do rozmiaru ' + getSize().label + '.';
+  }
+
+  function renderDiscounts() {
+    const calc = getCalculation();
+    els.discountTierList.innerHTML = tiers.map(tier => {
+      const base = calc.size.basePrice * (1 - tier.discount);
+      return [
+        '<div class="kf-discount-tier ' + (calc.tier.label === tier.label ? 'active' : '') + '">',
+        '<span>' + tier.label + '</span>',
+        '<strong>' + money(base) + '/szt. bazowo</strong>',
+        '</div>'
+      ].join('');
+    }).join('');
+    els.activeDiscountLabel.textContent = 'Aktywny próg: ' + calc.tier.label + ', rabat ' + Math.round(calc.tier.discount * 100) + '%';
+  }
+
+  function updateSummaryRows() {
+    const color = getColor();
+    const calc = getCalculation();
+    const material = fixedMaterialLabel;
+    const fileName = state.fileName || 'Nie dodano';
+
+    $('summarySize').textContent = calc.size.label;
+    $('summaryColor').textContent = color.label;
+    $('summaryMaterial').textContent = material;
+    $('summaryQuantity').textContent = calc.quantity + ' szt.';
+    $('summaryPrint').textContent = calc.print.label + (calc.print.price ? ' +' + money(calc.print.price) + '/szt.' : '');
+    $('summaryOneTime').textContent = money(calc.oneTime);
+    $('summaryFile').textContent = fileName.length > 28 ? fileName.slice(0, 28) + '...' : fileName;
+    els.unitPriceTop.textContent = money(calc.unit);
+    els.unitPriceBottom.textContent = money(calc.unit);
+    els.totalOrderPrice.textContent = money(calc.total);
+  }
+
+  function buildSummaryText() {
+    const color = getColor();
+    const calc = getCalculation();
+    const material = fixedMaterialLabel;
+    const clientName = els.clientName.value.trim() || 'nie podano';
+    const clientPhone = els.clientPhone.value.trim() || 'nie podano';
+    const clientMessage = els.clientMessage.value.trim() || 'brak dodatkowej wiadomości';
+    const fileName = state.fileName || 'nie dodano';
+
+    return [
+      'Podsumowanie konfiguracji: Torba/Kosmetyczka Piramidka',
+      '',
+      '--- DANE KLIENTA ---',
+      'Imię i nazwisko / firma: ' + clientName,
+      'Telefon: ' + clientPhone,
+      '',
+      '--- WIADOMOŚĆ OD KLIENTA ---',
+      clientMessage,
+      '',
+      '--- PRODUKT ---',
+      'Produkt: Torba/Kosmetyczka Piramidka',
+      'Rozmiar: ' + calc.size.label,
+      'Kolor: ' + color.label,
+      'Folder Cloudinary koloru: Konfigurator Piramidka/' + color.folder,
+      'Galeria rozmiaru: ' + (calc.size.galleryKey === 'small' ? 'Mała' : 'Duża'),
+      'Zdjęcia Wspólne / Back: Konfigurator Piramidka/' + color.folder + '/Wspólne',
+      'Podszewka: ' + liningImages[els.productSize.value === 'duza' ? 'duza' : 'mala'].label,
+      'Materiał: ' + material,
+      'Ilość: ' + calc.quantity + ' szt.',
+      'Próg ilościowy: ' + calc.tier.label + ' / rabat ' + Math.round(calc.tier.discount * 100) + '%',
+      '',
+      '--- PERSONALIZACJA ---',
+      'Nadruk: ' + calc.print.label,
+      'Dopłata za nadruk / szt.: ' + money(calc.print.price),
+      'Obróbka grafiki: ' + (els.logoCorrection.checked ? 'tak, +20 zł' : 'nie'),
+      'Projekt od zera: ' + (els.projectFromScratch.checked ? 'tak, +50 zł' : 'nie'),
+      'Plik graficzny: ' + fileName,
+      '',
+      '--- KALKULACJA ---',
+      'Cena bazowa po rabacie / szt.: ' + money(calc.discountedBase),
+      'Cena nadruku / szt.: ' + money(calc.print.price),
+      'Cena końcowa / szt.: ' + money(calc.unit),
+      'Dodatki jednorazowe: ' + money(calc.oneTime),
+      'Łącznie orientacyjnie: ' + money(calc.total),
+      '',
+      '--- UWAGI ---',
+      'To jest wycena orientacyjna z konfiguratora. Finalna cena wymaga potwierdzenia po sprawdzeniu pliku graficznego i ilości.'
+    ].join('\n');
+  }
+
+  function renderSummaryText() {
+    els.summaryText.value = buildSummaryText();
+  }
+
+  function render() {
+    els.quantity.value = getQuantity();
+    renderColorSwatches();
+    renderMainGallery();
+    renderCommonGallery();
+    renderLining();
+    renderDiscounts();
+    updateSummaryRows();
+    renderSummaryText();
+  }
+
+  function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    return new Promise((resolve, reject) => {
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      temp.style.position = 'fixed';
+      temp.style.left = '-9999px';
+      document.body.appendChild(temp);
+      temp.focus();
+      temp.select();
+      try {
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        resolve();
+      } catch (error) {
+        document.body.removeChild(temp);
+        reject(error);
+      }
+    });
+  }
+
+  function showCopied() {
+    els.copied.style.display = 'block';
+    setTimeout(() => { els.copied.style.display = 'none'; }, 2400);
+  }
+
+  function buildJotformUrl() {
+    const params = new URLSearchParams();
+    params.set(JOTFORM_SUMMARY_FIELD, buildSummaryText());
+    return JOTFORM_URL + '?' + params.toString();
+  }
+
+  function sendToJotform() {
+    copyToClipboard(buildSummaryText()).catch(() => {});
+    window.open(buildJotformUrl(), '_blank', 'noopener');
+    showCopied();
+  }
+
+  function resetForm() {
+    state.color = 'chabrowy';
+    state.mainIndex = 0;
+    state.commonIndex = 0;
+    state.fileName = '';
+    if (state.logoPreviewUrl && state.logoPreviewUrl.startsWith('blob:')) URL.revokeObjectURL(state.logoPreviewUrl);
+    state.logoPreviewUrl = 'https://res.cloudinary.com/dblyczqg2/image/upload/v1778538189/Kreator_Fantazji_fzw6fc.png';
+    els.productSize.value = 'mala';
+    els.quantity.value = 1;
+    els.printOption.value = 'none';
+    els.logoCorrection.checked = false;
+    els.projectFromScratch.checked = false;
+    els.logoFile.value = '';
+    els.clientName.value = '';
+    els.clientPhone.value = '';
+    els.clientMessage.value = '';
+    render();
+  }
+
+  [
+    els.productSize,
+    els.quantity,
+    els.printOption,
+    els.logoCorrection,
+    els.projectFromScratch,
+    els.clientName,
+    els.clientPhone,
+    els.clientMessage
+  ].forEach(el => {
+    el.addEventListener('input', () => {
+      if (el === els.productSize) {
+        state.mainIndex = 0;
+      }
+      render();
+    });
+    el.addEventListener('change', () => {
+      if (el === els.productSize) {
+        state.mainIndex = 0;
+      }
+      render();
+    });
+  });
+
+  els.logoFile.addEventListener('change', () => {
+    const file = els.logoFile.files && els.logoFile.files[0];
+    state.fileName = file ? file.name : '';
+    if (state.logoPreviewUrl && state.logoPreviewUrl.startsWith('blob:')) URL.revokeObjectURL(state.logoPreviewUrl);
+    state.logoPreviewUrl = file ? URL.createObjectURL(file) : 'https://res.cloudinary.com/dblyczqg2/image/upload/v1778538189/Kreator_Fantazji_fzw6fc.png';
+    render();
+  });
+
+  els.copyBtn.addEventListener('click', () => {
+    copyToClipboard(buildSummaryText()).then(showCopied).catch(() => {
+      els.summaryText.focus();
+      els.summaryText.select();
+    });
+  });
+
+  els.sendBtn.addEventListener('click', sendToJotform);
+  els.resetBtn.addEventListener('click', resetForm);
+
+  render();
+})();
+</script>
+</body>
+</html>
